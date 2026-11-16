@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cantonese cards</title>
+<style>
+  /* Colours live here: change them once and the whole page updates */
+  :root {
+    --ink: #3b2a2a;
+    --red: #e8423f;
+    --jade: #5fbf9f;
+    --blush: #ffe3e6;
+    --sun: #ffd66b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; padding: 1rem 1rem 2rem;
+    color: var(--ink); text-align: center;
+    font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", "Nunito", "Trebuchet MS", sans-serif;
+    background-color: var(--blush);
+    /* polka-dot wallpaper */
+    background-image: radial-gradient(#ffc5cc 18%, transparent 19%);
+    background-size: 28px 28px;
+  }
+  main { max-width: 440px; margin: 0 auto; }
+  .zh { font-family: "PingFang HK", "Noto Sans HK", "Microsoft JhengHei", "Heiti TC", sans-serif; }
+
+  /* Header: three mascots and a title */
+  header .mascots { display: flex; justify-content: center; align-items: flex-end; gap: .6rem; }
+  header svg { width: 76px; height: 76px; }
+  h1 { margin: .2rem 0 .8rem; font-size: 1.5rem; }
+  h1 .zh { color: var(--red); font-size: 1.8rem; margin-right: .3rem; }
+
+  /* Controls */
+  .btn, button {
+    font: inherit; font-size: 1.05rem; color: var(--ink); cursor: pointer;
+    background: #fff; border: 3px solid var(--ink); border-radius: 999px;
+    padding: .55rem 1.2rem; margin: .3rem .15rem;
+    box-shadow: 0 4px 0 var(--ink);
+  }
+  .btn:active, button:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+  .btn:focus-visible, button:focus-visible, #card:focus-visible { outline: 4px solid var(--sun); outline-offset: 3px; }
+  #flip { background: var(--sun); }
+  #file { display: none; }
+  .toggle { display: inline-block; margin: 2.0rem 0 .4rem; cursor: pointer; }
+  .toggle input { accent-color: var(--red); width: 1.rem; height: 1.1rem; vertical-align: -3px; }
+
+  #count { margin: .8rem 0 1rem; font-size: 1rem; }
+
+  /* The card is a mahjong tile: white face, jade edge underneath */
+  #card {
+    background: #fff; border: 3px solid var(--ink); border-radius: 26px;
+    min-height: 260px; padding: 1.2rem; margin: 0 1rem 1.6rem;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .5rem;
+    cursor: pointer;
+    box-shadow: 0 11px 0 var(--jade), 0 14px 0 var(--ink);
+  }
+  #jp { font-size: 2.1rem; line-height: 1.2; }
+  #hint { font-size: .85rem; opacity: .6; }
+  #chars { font-size: 4.2rem; color: var(--red); line-height: 1.1; }
+  #eng { font-size: 1.4rem; }
+  #back:not([hidden]) { animation: pop .18s ease-out; }
+  @keyframes pop { from { transform: scale(.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { #back:not([hidden]) { animation: none; } }
+
+  footer svg { width: 150px; height: 70px; }
+</style>
+</head>
+<body>
+
+<!-- Drawings are defined once here, then reused with <use>. No images, so it works offline -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Har gow dumpling -->
+    <symbol id="hargow" viewBox="0 0 80 64">
+        <path d="M6 42Q6 12 40 12Q74 12 74 42Q74 54 40 54Q6 54 6 42Z" fill="#fff" stroke="#3b2a2a" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M26 15q-3 8 0 15M40 12v17M54 15q3 8 0 15" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="29" cy="41" r="3" fill="#3b2a2a"/><circle cx="51" cy="41" r="3" fill="#3b2a2a"/>
+        <path d="M36 45q4 4 8 0" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+        <ellipse cx="20" cy="46" rx="5" ry="3" fill="#ffa8b4"/><ellipse cx="60" cy="46" rx="5" ry="3" fill="#ffa8b4"/>
+    <!-- Siu mai: yellow wrapper, pink filling, orange roe on top -->
+    <symbol id="siumai" viewBox="0 0 80 64">
+        <!-- wrapper body -->
+        <path d="M10 27V46Q10 57 40 57Q70 57 70 46V27Z" fill="#ffe08a" stroke="#3b2a2a" stroke-width="3" stroke-linejoin="round"/>
+        <!-- wrapper rim, then the filling sitting inside it -->
+        <ellipse cx="40" cy="26" rx="31" ry="12" fill="#ffe08a" stroke="#3b2a2a" stroke-width="3"/>
+        <ellipse cx="40" cy="25" rx="25" ry="8.5" fill="#f6a98b" stroke="#3b2a2a" stroke-width="2.5"/>
+        <!-- orange roe on top -->
+        <circle cx="40" cy="23" r="5" fill="#ff8a3d"/>
+        <circle cx="38.5" cy="21.5" r="1.3" fill="#ffc48f"/>
+        <!-- pleats -->
+        <path d="M24 38v14M40 40v16M56 38v14" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round" opacity=".45"/>
+        <!-- face -->
+        <circle cx="29" cy="45" r="3" fill="#3b2a2a"/><circle cx="51" cy="45" r="3" fill="#3b2a2a"/>
+        <path d="M36 49q4 4 8 0" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+        <ellipse cx="19" cy="50" rx="4.5" ry="2.8" fill="#ffa8b4"/><ellipse cx="61" cy="50" rx="4.5" ry="2.8" fill="#ffa8b4"/>
+    </symbol>
+    <!-- Mahjong tile (red dragon) -->
+    <symbol id="tile" viewBox="0 0 64 80">
+        <rect x="6" y="8" width="48" height="66" rx="10" fill="#5fbf9f" stroke="#3b2a2a" stroke-width="3"/>
+        <rect x="6" y="4" width="48" height="62" rx="10" fill="#fff" stroke="#3b2a2a" stroke-width="3"/>
+        <text x="30" y="42" text-anchor="middle" font-size="34" font-weight="700" fill="#e8423f" font-family="PingFang HK, Noto Sans HK, Microsoft JhengHei, sans-serif">中</text>
+        <circle cx="21" cy="53" r="2.5" fill="#3b2a2a"/><circle cx="39" cy="53" r="2.5" fill="#3b2a2a"/>
+        <path d="M27 57q3 3 6 0" fill="none" stroke="#3b2a2a" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <!-- Zodiac rabbit -->
+    <symbol id="rabbit" viewBox="0 0 80 90">
+        <ellipse cx="27" cy="22" rx="9" ry="21" fill="#fff" stroke="#3b2a2a" stroke-width="3" transform="rotate(-8 27 22)"/>
+        <ellipse cx="53" cy="22" rx="9" ry="21" fill="#fff" stroke="#3b2a2a" stroke-width="3" transform="rotate(8 53 22)"/>
+        <ellipse cx="27" cy="24" rx="4" ry="13" fill="#ffa8b4" transform="rotate(-8 27 24)"/>
+        <ellipse cx="53" cy="24" rx="4" ry="13" fill="#ffa8b4" transform="rotate(8 53 24)"/>
+        <ellipse cx="40" cy="58" rx="30" ry="25" fill="#fff" stroke="#3b2a2a" stroke-width="3"/>
+        <circle cx="29" cy="55" r="3.2" fill="#3b2a2a"/><circle cx="51" cy="55" r="3.2" fill="#3b2a2a"/>
+        <path d="M37 62q3 3 6 0M40 60v2" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+        <ellipse cx="21" cy="64" rx="5.5" ry="3.2" fill="#ffa8b4"/><ellipse cx="59" cy="64" rx="5.5" ry="3.2" fill="#ffa8b4"/>
+        <path d="M22 78q18 8 36 0" fill="none" stroke="#e8423f" stroke-width="6" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main>
+  <header>
+    <div class="mascots">
+      <svg role="img" aria-label="Dumpling"><use href="#siumai"/></svg>
+      <svg role="img" aria-label="Rabbit" style="width:92px;height:92px"><use href="#rabbit"/></svg>
+      <svg role="img" aria-label="Mahjong tile"><use href="#tile"/></svg>
+    </div>
+    <h1><span class="zh">廣東話</span>Cantonese</h1>
+  </header>
+
+  <!-- File picker: the label is the visible button, the real input is hidden -->
+  <label class="btn" for="file">Choose CSV</label>
+  <input type="file" id="file" accept=".csv">
+  <br>
+  <label class="toggle"><input type="checkbox" id="shuffle"> Shuffle</label>
+
+  <p id="count"></p>
+
+  <!-- The card (a mahjong tile). Front: jyutping. Back: characters + English -->
+  <div id="card" tabindex="0" role="button" aria-label="Flashcard, tap to flip">
+    <div id="jp">Choose a CSV to start</div>
+    <div id="hint"></div>
+    <div id="back" hidden>
+      <div id="chars" class="zh"></div>
+      <div id="eng"></div>
+    </div>
+  </div>
+
+  <button id="prev" aria-label="Previous card">&lsaquo; Back</button>
+  <button id="flip">Flip</button>
+  <button id="next" aria-label="Next card">Next &rsaquo;</button>
+
+  <footer>
+    <svg role="img" aria-label="Dumplings in a steamer" viewBox="0 0 150 70">
+      <use href="#hargow" x="12" y="-2" width="58" height="46"/>
+      <use href="#hargow" x="80" y="-2" width="58" height="46"/>
+      <rect x="4" y="38" width="142" height="26" rx="8" fill="#ffd66b" stroke="#3b2a2a" stroke-width="3"/>
+      <path d="M30 40v22M56 40v22M82 40v22M108 40v22" stroke="#3b2a2a" stroke-width="2.5" opacity=".5"/>
+    </svg>
+  </footer>
+</main>
+
+<script>
+
+/*JavaScript!!!*/
+
+// Shortcut: $(jp') is shorter than document.getElementById('jp')
+const $ = id => document.getElementById(id);
+
+// cards = the deck (a list of rows), i = index of the card currently showing
+let cards = [], i = 0;
+
+// ---------- READING THE CSV ----------
+
+// Function: Splits one CSV line into its cells, respecting "quoted, fields"
+function parseLine(line) {
+  const out = []; // finished cells
+  let cur = ''; // cell currently being built
+  let quoted = false; // are we inside quote marks?
+
+
+  for (const ch of line) { // go through the line one char at a time
+    if (ch === '"') quoted = !quoted; // quote mark: toggle "inside quotes"
+    else if (ch === ',' && !quoted) { out.push(cur); cur = ''; } // comma outside quotes: cell finsihed
+    else cur += ch; // anything else: add to current cell
+  }
+  out.push(cur); // don't forget the last cell!
+  return out.map(s => s.trim()); // remove stray spaces around each cell
+}
+
+// Function: turns the raw csv text into the deck and shows the first card
+function load(text) {
+  cards = text.trim().split(/\r?\n/).map(parseLine).filter(r => r[0]).slice(1); // remove stray spaces, split into lines
+  i = 0;
+  localStorage.setItem('cards', JSON.stringify(cards)); // remembered for next time
+  show();
+}
+
+$('file').onchange = e => {
+  const f = e.target.files[0];
+  if (f) f.text().then(load);
+};
+
+// Function: showing a card
+
+function show() {
+  const c = cards[i]; // current row: [jp, char, en]
+  if (!c) return; // if nothing loaded, do nothing
+  $('jp').textContent = c[0]; // front: jp
+  $('chars').textContent = c[1] || ''; // front: char
+  $('eng').textContent = c[2] || ''; // back: en
+  $('back').hidden = true; // always start front of card
+  $('count').textContent = (i + 1) + ' / ' + cards.length;
+}
+
+// BUTTONS
+
+$('card').onclick = $('flip').onclick = () => { $('back').hidden = !$('back').hidden; };
+$('next').onclick = () => { i = (i + 1) % cards.length; show(); };
+$('prev').onclick = () => { i = (i - 1 + cards.length) % cards.length; show(); };
+$('shuffle').onclick = () => { cards.sort(() => Math.random() - 0.5); i = 0; show(); };
+
+const saved = localStorage.getItem('cards');
+if (saved) { cards = JSON.parse(saved); show(); }
+  </script>
+  </body>
+  </html>
+
+
+</html>
