@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cantonese cards</title>
+
+<!--CSS STYLE-->
+<style>
+  /* Colours live here: change them once and the whole page updates */
+  :root {
+    --ink: #3b2a2a;
+    --red: #e8423f;
+    --jade: #5fbf9f;
+    --blush: #ffe3e6;
+    --burnt_red: #c5646e;
+    --sun: #ffd66b;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; padding: 1rem 1rem 2rem;
+    color: var(--ink); text-align: center;
+    font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", "Nunito", "Trebuchet MS", sans-serif;
+    background-color: var(--blush);
+    /* polka-dot wallpaper */
+    background-image: radial-gradient(#ffc5cc 18%, transparent 19%);
+    background-size: 28px 28px;
+  }
+  main { max-width: 440px; margin: 0 auto; }
+  .zh { font-family: "PingFang HK", "Noto Sans HK", "Microsoft JhengHei", "Heiti TC", sans-serif; }
+
+  /* Header: three mascots and a title */
+  header .mascots { display: flex; justify-content: center; align-items: flex-end; gap: .6rem; }
+  header svg { width: 76px; height: 76px; }
+  h1 { margin: .2rem 0 .8rem; font-size: 1.5rem; }
+  h1 .zh { color: var(--red); font-size: 1.8rem; margin-right: .3rem; }
+
+  /* Controls */
+  .btn, button {
+    font: inherit; font-size: 1.05rem; color: var(--ink); cursor: pointer;
+    background: #fff; border: 3px solid var(--ink); border-radius: 999px;
+    padding: .55rem 1.2rem; margin: .3rem .15rem;
+    box-shadow: 0 4px 0 var(--ink);
+  }
+  .btn:active, button:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+  .btn:focus-visible, button:focus-visible, #card:focus-visible { outline: 4px solid var(--sun); outline-offset: 3px; }
+  #flip { background: var(--sun); }
+  #file { display: none; }
+  .toggle { display: inline-block; margin: 2.0rem 0 .4rem; cursor: pointer; }
+  .toggle input { accent-color: var(--red); width: 1.1rem; height: 1.1rem; vertical-align: -3px; }
+
+  #count { margin: .8rem 0 1rem; font-size: 1rem; }
+
+  /* The card is a mahjong tile: white face, jade edge underneath */
+  #card {
+    background: #fff; border: 3px solid var(--ink); border-radius: 26px;
+    min-height: 260px; padding: 1.2rem; margin: 0 1rem 1.6rem;
+    display: flex; flex-direction: column; justify-content: center; align-items: center; gap: .5rem;
+    cursor: pointer;
+    box-shadow: 0 11px 0 var(--jade), 0 14px 0 var(--ink);
+  }
+  #jp { font-size: 2.1rem; line-height: 1.2;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: .2rem .7rem; }
+
+  /* One syllable: contour line above, text below */
+  .syl { display: inline-flex; flex-direction: column; align-items: center; }
+  .syl svg { width: 1.6rem; height: 1.3rem; }
+  #hint { font-size: .85rem; opacity: .6; }
+  #chars { font-size: 4.2rem; color: var(--red); line-height: 1.1; }
+  #eng { font-size: 1.4rem; }
+  .pop { animation: pop .18s ease-out; }
+  @media (prefers-reduced-motion: reduce) { .pop { animation: none; } }
+  @keyframes pop { from { transform: scale(.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { #back:not([hidden]) { animation: none; } }
+
+  footer svg { width: 150px; height: 70px; }
+
+  /* Category filter chips */
+/* Collapsible category filter */
+  #filterBox { margin: .6rem auto; max-width: 340px; background: #fff; text-align: left;
+              border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 4px 0 var(--ink); }
+  #filterBox summary { padding: .55rem 1rem; cursor: pointer; list-style: none; }
+  #filterBox summary::-webkit-details-marker { display: none; }  /* hides Safari's default arrow */
+  #filterBox summary::after { content: " ▾"; }
+  #filters { max-height: 220px; overflow-y: auto; padding: .2rem 1rem .8rem; }  /* scrolls when long */
+  #filters label { display: flex; align-items: center; gap: .6rem; padding: .35rem 0; cursor: pointer; }
+  #filters input { accent-color: var(--red); width: 1.1rem; height: 1.1rem; }
+
+  /* Category label on the card */
+  #cat { font-size: .8rem; background: var(--blush); border: 2px solid var(--ink);
+        border-radius: 999px; padding: .15rem .7rem; }
+  #cat:empty { display: none; }
+
+  /* Again / Got it buttons */
+#again { background: var(--burnt_red); }
+#gotit { background: var(--jade); }
+
+/* Small text-style button */
+.link { border: none; box-shadow: none; background: none; font-size: .85rem;
+        text-decoration: underline; opacity: .7; }
+</style>
+</head>
+<body>
+
+<!-- Drawings are defined once here, then reused with <use>. No images, so it works offline -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Har gow dumpling -->
+    <symbol id="hargow" viewBox="0 0 80 64">
+        <path d="M6 42Q6 12 40 12Q74 12 74 42Q74 54 40 54Q6 54 6 42Z" fill="#fff" stroke="#3b2a2a" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M26 15q-3 8 0 15M40 12v17M54 15q3 8 0 15" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="29" cy="41" r="3" fill="#3b2a2a"/><circle cx="51" cy="41" r="3" fill="#3b2a2a"/>
+        <path d="M36 45q4 4 8 0" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+        <ellipse cx="20" cy="46" rx="5" ry="3" fill="#ffa8b4"/><ellipse cx="60" cy="46" rx="5" ry="3" fill="#ffa8b4"/>
+    </symbol>
+    <!-- Siu mai: yellow wrapper, pink filling, orange roe on top -->
+    <symbol id="siumai" viewBox="0 0 80 64">
+        <!-- wrapper body -->
+        <path d="M10 27V46Q10 57 40 57Q70 57 70 46V27Z" fill="#ffe08a" stroke="#3b2a2a" stroke-width="3" stroke-linejoin="round"/>
+        <!-- wrapper rim, then the filling sitting inside it -->
+        <ellipse cx="40" cy="26" rx="31" ry="12" fill="#ffe08a" stroke="#3b2a2a" stroke-width="3"/>
+        <ellipse cx="40" cy="25" rx="25" ry="8.5" fill="#f6a98b" stroke="#3b2a2a" stroke-width="2.5"/>
+        <!-- orange roe on top -->
+        <circle cx="40" cy="23" r="5" fill="#ff8a3d"/>
+        <circle cx="38.5" cy="21.5" r="1.3" fill="#ffc48f"/>
+        <!-- pleats -->
+        <path d="M24 38v14M40 40v16M56 38v14" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round" opacity=".45"/>
+        <!-- face -->
+        <circle cx="29" cy="45" r="3" fill="#3b2a2a"/><circle cx="51" cy="45" r="3" fill="#3b2a2a"/>
+        <path d="M36 49q4 4 8 0" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+        <ellipse cx="19" cy="50" rx="4.5" ry="2.8" fill="#ffa8b4"/><ellipse cx="61" cy="50" rx="4.5" ry="2.8" fill="#ffa8b4"/>
+    </symbol>
+    <!-- Mahjong tile (red dragon) -->
+    <symbol id="tile" viewBox="0 0 64 80">
+        <rect x="6" y="8" width="48" height="66" rx="10" fill="#5fbf9f" stroke="#3b2a2a" stroke-width="3"/>
+        <rect x="6" y="4" width="48" height="62" rx="10" fill="#fff" stroke="#3b2a2a" stroke-width="3"/>
+        <text x="30" y="42" text-anchor="middle" font-size="34" font-weight="700" fill="#e8423f" font-family="PingFang HK, Noto Sans HK, Microsoft JhengHei, sans-serif">中</text>
+        <circle cx="21" cy="53" r="2.5" fill="#3b2a2a"/><circle cx="39" cy="53" r="2.5" fill="#3b2a2a"/>
+        <path d="M27 57q3 3 6 0" fill="none" stroke="#3b2a2a" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <!-- Zodiac rabbit -->
+    <symbol id="rabbit" viewBox="0 0 80 90">
+        <ellipse cx="27" cy="22" rx="9" ry="21" fill="#fff" stroke="#3b2a2a" stroke-width="3" transform="rotate(-8 27 22)"/>
+        <ellipse cx="53" cy="22" rx="9" ry="21" fill="#fff" stroke="#3b2a2a" stroke-width="3" transform="rotate(8 53 22)"/>
+        <ellipse cx="27" cy="24" rx="4" ry="13" fill="#ffa8b4" transform="rotate(-8 27 24)"/>
+        <ellipse cx="53" cy="24" rx="4" ry="13" fill="#ffa8b4" transform="rotate(8 53 24)"/>
+        <ellipse cx="40" cy="58" rx="30" ry="25" fill="#fff" stroke="#3b2a2a" stroke-width="3"/>
+        <circle cx="29" cy="55" r="3.2" fill="#3b2a2a"/><circle cx="51" cy="55" r="3.2" fill="#3b2a2a"/>
+        <path d="M37 62q3 3 6 0M40 60v2" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+        <ellipse cx="21" cy="64" rx="5.5" ry="3.2" fill="#ffa8b4"/><ellipse cx="59" cy="64" rx="5.5" ry="3.2" fill="#ffa8b4"/>
+        <path d="M22 78q18 8 36 0" fill="none" stroke="#e8423f" stroke-width="6" stroke-linecap="round"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main>
+  <header>
+    <div class="mascots">
+      <svg role="img" aria-label="Dumpling"><use href="#siumai"/></svg>
+      <svg role="img" aria-label="Rabbit" style="width:92px;height:92px"><use href="#rabbit"/></svg>
+      <svg role="img" aria-label="Mahjong tile"><use href="#tile"/></svg>
+    </div>
+    <h1><span class="zh">廣東話</span>Flashcards in Canto</h1>
+  </header>
+
+  <!-- File picker: the label is the visible button, the real input is hidden -->
+  <label class="btn" for="file">Choose CSV</label>
+  <input type="file" id="file" accept=".csv">
+  <button id="dir"></button>
+  <br>
+  <label class="toggle"><input type="checkbox" id="shuffle"> Shuffle</label>
+  <details id="filterBox">
+    <summary id="filterLabel">Categories: All</summary>
+    <div id="filters"></div>
+  </details>
+  
+
+  <p id="count"></p>
+
+  <!-- The card (a mahjong tile). Front: jyutping + characters. Back: English -->
+  <div id="card" tabindex="0" role="button" aria-label="Flashcard, tap to flip">
+    <div id="cat"></div>
+    <div id="cn">                       <!-- the Cantonese side: jyutping + characters -->
+      <div id="jp">Choose a CSV to start</div>
+      <div id="chars" class="zh"></div>
+    </div>
+    <div id="eng"></div>
+    <div id="hint"></div>
+  </div>
+
+  <button id="prev" aria-label="Previous card">&lsaquo; Back</button>
+  <button id="flip">Flip</button>
+  <button id="speak" aria-label="Play pronunciation">🔊</button>
+  <button id="next" aria-label="Next card">Next &rsaquo;</button>
+  <div id="rate">
+    <button id="again">↻ Again</button>
+    <button id="gotit">✓ Got it</button>
+  </div>
+  <button id="reset" class="link">Reset progress</button>
+
+  <footer>
+    <svg role="img" aria-label="Dumplings in a steamer" viewBox="0 0 150 70">
+      <use href="#hargow" x="12" y="-2" width="58" height="46"/>
+      <use href="#hargow" x="80" y="-2" width="58" height="46"/>
+      <rect x="4" y="38" width="142" height="26" rx="8" fill="#ffd66b" stroke="#3b2a2a" stroke-width="3"/>
+      <path d="M30 40v22M56 40v22M82 40v22M108 40v22" stroke="#3b2a2a" stroke-width="2.5" opacity=".5"/>
+    </svg>
+  </footer>
+</main>
+
+<script>
+
+/*JAVASCRIPT!!!*/
+
+// Shortcut: $(jp') is shorter than document.getElementById('jp')
+const $ = id => document.getElementById(id);
+
+// Tone colours and pitch shapes. from/to = start and end pitch on a scale of 1 (low) to 5 (high)
+const TONES = {
+  1: { color: '#e8423f', from: 5, to: 5 },  // high level
+  2: { color: '#d9730d', from: 2, to: 5 },  // mid rising
+  3: { color: '#2f9e6f', from: 3, to: 3 },  // mid level
+  4: { color: '#2f6fd0', from: 2, to: 1 },  // low falling
+  5: { color: '#8250c8', from: 2, to: 3 },  // low rising
+  6: { color: '#c2418a', from: 2, to: 2 },  // low level
+};
+
+// reverse = show English first; flipped = has the hidden side been revealed?
+let reverse = localStorage.getItem('reverse') === '1';
+let flipped = false;
+
+// original = every row from the CSV, cards = the filtered deck, selected = chosen categories
+let cards = [], original = [], selected = new Set(), i = 0;
+
+// Category of a row (4th column), with a fallback if it's missing
+const catOf = r => r[3] || 'Uncategorised';
+
+// A card's unique key, and the set of cards marked "known" (saved on this device)
+const keyOf = r => r[0] + '|' + (r[1] || '');
+let known = new Set();
+try { known = new Set(JSON.parse(localStorage.getItem('known') || '[]')); } catch (e) {}
+const saveKnown = () => localStorage.setItem('known', JSON.stringify([...known]));
+let knownInView = 0;   // how many known cards are in the selected categories
+
+// ---------- READING THE CSV ----------
+
+// Function: Splits one CSV line into its cells, respecting "quoted, fields"
+function parseLine(line) {
+  const out = []; // finished cells
+  let cur = ''; // cell currently being built
+  let quoted = false; // are we inside quote marks?
+
+
+  for (const ch of line) { // go through the line one char at a time
+    if (ch === '"') quoted = !quoted; // quote mark: toggle "inside quotes"
+    else if (ch === ',' && !quoted) { out.push(cur); cur = ''; } // comma outside quotes: cell finsihed
+    else cur += ch; // anything else: add to current cell
+  }
+  out.push(cur); // don't forget the last cell!
+  return out.map(s => s.trim()); // remove stray spaces around each cell
+}
+
+// Function: turns the raw csv text into the deck and shows the first card
+function load(text) {
+  original = text.trim().split(/\r?\n/).map(parseLine).filter(r => r[0]).slice(1);
+  localStorage.setItem('cards', JSON.stringify(original)); // remember the full deck
+  selected.clear();                                        // start with all categories
+  renderChips();
+  applyFilter();
+}
+
+$('file').onchange = e => {
+  const f = e.target.files[0];
+  if (f) f.text().then(load);
+};
+
+// Function: showing a card
+
+function show() {
+  if (!original.length) return;            // nothing loaded yet: keep the welcome text
+  const c = cards[i];
+  flipped = false;
+  showSides();;
+
+  if (!c) {                                // no cards left to learn
+    $('cat').textContent = '';
+    $('jp').textContent = 'All done! 🎉';
+    $('chars').textContent = '';
+    $('eng').textContent = '';
+    $('count').textContent = knownInView + ' known';
+    return;
+  }
+
+  renderJyutping(c[0]);;
+  $('chars').textContent = c[1] || '';
+  $('eng').textContent = c[2] || '';
+  $('cat').textContent = catOf(c);
+  $('count').textContent = (i + 1) + ' / ' + cards.length + ' left · ' + knownInView + ' known';
+}
+
+// Random-order copy of a list (Fisher-Yates shuffle)
+function shuffled(list) {
+  const a = [...list];
+  for (let n = a.length - 1; n > 0; n--) {
+    const j = Math.floor(Math.random() * (n + 1));
+    [a[n], a[j]] = [a[j], a[n]];
+  }
+  return a;
+}
+
+// Build the working deck: keep only chosen categories, then shuffle if ticked
+function applyFilter() {
+  // pool = cards in the chosen categories; deck = the ones not yet known
+  const pool = selected.size ? original.filter(r => selected.has(catOf(r))) : [...original];
+  const deck = pool.filter(r => !known.has(keyOf(r)));
+  knownInView = pool.length - deck.length;
+  cards = $('shuffle').checked ? shuffled(deck) : deck;
+  i = 0;
+  show();
+}
+
+// Draw an "All" checkbox plus one checkbox per category
+function renderChips() {
+  const cats = [...new Set(original.map(catOf))];
+  const y = $('filters').scrollTop;          // remember scroll position in the list
+  $('filters').innerHTML = '';
+
+  const add = (label, checked, onchange) => {
+    const l = document.createElement('label');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox';
+    cb.checked = checked;
+    cb.onchange = onchange;
+    l.append(cb, label);
+    $('filters').appendChild(l);
+  };
+
+  add('All', selected.size === 0, () => { selected.clear(); renderChips(); applyFilter(); });
+
+  cats.forEach(c => add(c, selected.has(c), () => {
+    selected.has(c) ? selected.delete(c) : selected.add(c);
+    renderChips();
+    applyFilter();
+  }));
+
+  $('filters').scrollTop = y;                // restore scroll position
+  // The closed panel's summary shows what's active
+  $('filterLabel').textContent = 'Categories: ' + (selected.size ? selected.size + ' selected' : 'All');
+}
+
+// Show or hide each side depending on the direction and whether the card is flipped
+function showSides() {
+  if (!cards[i]) {                    // welcome / "all done" message lives in #cn, so always show it
+    $('cn').hidden = false;
+    $('eng').hidden = true;
+    return;
+  }
+  $('cn').hidden = reverse && !flipped;     // reverse: Cantonese is the hidden side
+  $('eng').hidden = !reverse && !flipped;   // normal: English is the hidden side
+  $('cn').classList.remove('pop');
+  $('eng').classList.remove('pop');
+}
+
+// Update the toggle button's label
+function updateDir() {
+  $('dir').textContent = reverse ? 'English → Jyutping' : 'Jyutping → English';
+}
+
+// Draw the jyutping with each syllable coloured and given a tone line
+function renderJyutping(text) {
+  const box = $('jp');
+  box.textContent = '';                              // clear the previous card
+
+  text.split(/\s+/).forEach(word => {                // one syllable at a time
+    const m = word.match(/^(.*?)([1-6])$/);          // m[2] = the tone number at the end
+    const syl = document.createElement('span');
+    syl.className = 'syl';
+
+    if (m) {
+      const t = TONES[m[2]];
+      const y = n => (20 - 3.6 * n).toFixed(1);      // convert pitch (1-5) to a height in the drawing
+      syl.style.color = t.color;
+      syl.innerHTML =
+        '<svg viewBox="0 0 24 20" aria-hidden="true">' +
+        '<line x1="3" y1="' + y(t.from) + '" x2="21" y2="' + y(t.to) + '"' +
+        ' stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+    }
+
+    const label = document.createElement('span');
+    label.textContent = word;                        // the syllable text itself
+    syl.append(label);
+    $('jp').append(syl);
+  });
+}
+
+// BUTTONS
+
+$('card').onclick = $('flip').onclick = () => {
+  if (!cards[i]) return;
+  flipped = !flipped;
+  showSides();
+  if (flipped) $(reverse ? 'cn' : 'eng').classList.add('pop');   // animate the revealed side
+};
+$('next').onclick = () => { i = (i + 1) % cards.length; show(); };
+$('prev').onclick = () => { i = (i - 1 + cards.length) % cards.length; show(); };
+$('shuffle').onchange = applyFilter;
+
+// Switch direction and remember the choice
+$('dir').onclick = () => {
+  reverse = !reverse;
+  localStorage.setItem('reverse', reverse ? '1' : '0');
+  updateDir();
+  show();                              // redraw the current card in the new direction
+};
+
+// Got it: remember the card as known and take it out of this round
+$('gotit').onclick = () => {
+  const c = cards[i];
+  if (!c) return;
+  known.add(keyOf(c));
+  saveKnown();
+  cards.splice(i, 1);                       // remove it from the current deck
+  knownInView++;
+  if (i >= cards.length) i = 0;             // wrap round if it was the last card
+  show();
+};
+
+// Again: send the card to the back of the queue so it returns later
+$('again').onclick = () => {
+  if (!cards[i]) return;
+  cards.push(cards.splice(i, 1)[0]);        // remove it, then add it to the end
+  if (i >= cards.length - 1) i = 0;         // if we were at the end, go back to the start
+  show();
+};
+
+// Reset: forget all progress
+$('reset').onclick = () => {
+  if (confirm('Mark every card as not yet known?')) {
+    known.clear();
+    saveKnown();
+    applyFilter();
+  }
+};
+
+// Find a Cantonese voice installed on this device (zh-HK or yue)
+function cantoneseVoice() {
+  return speechSynthesis.getVoices().find(v => /^(zh[-_]HK|yue)/i.test(v.lang));
+}
+
+// Read the current card's characters aloud
+function speak() {
+  const c = cards[i];
+  if (!c || !c[1]) return;               // no characters, nothing to say
+  const u = new SpeechSynthesisUtterance(c[1]);
+  const v = cantoneseVoice();
+  if (v) u.voice = v;
+  u.lang = v ? v.lang : 'zh-HK';
+  u.rate = 0.8;                          // a little slower so it's easier to follow
+  speechSynthesis.cancel();              // stop anything already playing
+  speechSynthesis.speak(u);
+}
+
+$('speak').onclick = speak;
+
+updateDir();
+showSides();
+
+const saved = localStorage.getItem('cards');
+if (saved) { original = JSON.parse(saved); renderChips(); applyFilter(); }
+
+// Register the service worker so the page can open without signal
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').catch(() => {});
+}
+  </script>
+  </body>
+  </html>
+
+
+</html>

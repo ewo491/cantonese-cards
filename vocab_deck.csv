@@ -1,70 +1,229 @@
-jp,chars,eng
-nei5 hou2,你好,hello
-zou2 san4,早晨,good morning
-maan5 on1,晚安,good night
-zoi3 gin3,再見,goodbye
-m4 goi1,唔該,thanks (for a service) / excuse me / please
-do1 ze6,多謝,thank you (for a gift)
-deoi3 m4 zyu6,對唔住,sorry
-m4 hou2 ji3 si1,唔好意思,excuse me / sorry (polite)
-hai6,係,yes / to be
-m4 hai6,唔係,no / is not
-jau5,有,to have
-mou5,冇,to not have
-hou2,好,good
-m4 hou2,唔好,bad / don't
-ngo5,我,I / me
-nei5,你,you
-keoi5,佢,he / she / it
-ngo5 dei6,我哋,we / us
-nei5 dei6,你哋,you (plural)
-keoi5 dei6,佢哋,they / them
-mat1 je5,乜嘢,what
-bin1 go3,邊個,who
-bin1 dou6,邊度,where
-gei2 si4,幾時,when
-dim2 gaai2,點解,why
-dim2 joeng2,點樣,how
-gei2 do1,幾多,how many / how much
-jat1,一,one
-ji6,二,two
-saam1,三,three
-sei3,四,four
-ng5,五,five
-luk6,六,six
-cat1,七,seven
-baat3,八,eight
-gau2,九,nine
-sap6,十,ten
-sik6,食,to eat
-jam2,飲,to drink
-seoi2,水,water
-caa4,茶,tea
-faan6,飯,rice / meal
-hou2 sik6,好食,delicious
-gam1 jat6,今日,today
-ting1 jat6,聽日,tomorrow
-cam4 jat6,尋日,yesterday
-dei6 tit3,地鐵,underground / MTR
-ba1 si2,巴士,bus
-heoi3,去,to go
-lai4,嚟,to come
-faan1 gung1,返工,to go to work
-fong3 gung1,放工,to finish work
-uk1 kei2,屋企,home
-gung1 si1,公司,company / office
-tung4 si6,同事,colleague
-pang4 jau5,朋友,friend
-ci3 so2,廁所,toilet
-daai6,大,big
-sai3,細,small
-gwai3,貴,expensive
-peng4,平,cheap
-jyun5,遠,far
-gan6,近,near
-hou2 do1,好多,many / a lot
-gong2,講,to speak
-sik1,識,to know (a person / a skill)
-zi1 dou3,知道,to know (a fact)
-m4 zi1,唔知,don't know
-m4 ming4 baak6,唔明白,don't understand
+jyutping,characters,english,category
+ji1 sang1,醫生,doctor,At the Doctor
+ji1 jyun2,醫院,hospital,At the Doctor
+tau4 tung3,頭痛,headache,At the Doctor
+tou5 tung3,肚痛,stomach ache,At the Doctor
+faat3 siu1,發燒,to have a fever,At the Doctor
+hou2 tung3,好痛,very painful,At the Doctor
+sang1 bing6,生病,to be ill,At the Doctor
+gam2 maak6,感冒,to have a cold,At the Doctor
+hou1 tiu4,咳,to cough,At the Doctor
+lau4 mou4,流鼻水,runny nose,At the Doctor
+bit6 sik1,鼻塞,blocked nose,At the Doctor
+hau4 tung3,喉嚨痛,sore throat,At the Doctor
+ngaan5 tung3,眼痛,eye pain,At the Doctor
+ji6 tung3,耳痛,earache,At the Doctor
+ngoi6 jat6,嘔吐,to vomit,At the Doctor
+ngai6 sam1,噁心,to feel nauseous,At the Doctor
+tou5 lau4,肚瀉,diarrhoea,At the Doctor
+bin6 bit6,便秘,constipation,At the Doctor
+san1 tung3,身痛,body aches,At the Doctor
+jiu1 tung3,腰痛,back pain,At the Doctor
+san1 ging1 tung3,神經痛,nerve pain,At the Doctor
+jau5 dim2,有啲,feel a little / have some,At the Doctor
+nei5 hou2,你好,hello,Basics
+zou2 san4,早晨,good morning,Basics
+maan5 on1,晚安,good night,Basics
+zoi3 gin3,再見,goodbye,Basics
+m4 goi1,唔該,thanks (for a service) / excuse me / please,Basics
+do1 ze6,多謝,thank you (for a gift),Basics
+deoi3 m4 zyu6,對唔住,sorry,Basics
+m4 hou2 ji3 si1,唔好意思,excuse me / sorry (polite),Basics
+hai6,係,yes / to be,Basics
+m4 hai6,唔係,no / is not,Basics
+jau5,有,to have,Basics
+mou5,冇,to not have,Basics
+hou2,好,good,Basics
+m4 hou2,唔好,bad / don't,Basics
+ngo5,我,I / me,Basics
+nei5,你,you,Basics
+keoi5,佢,he / she / it,Basics
+ngo5 dei6,我哋,we / us,Basics
+nei5 dei6,你哋,you (plural),Basics
+keoi5 dei6,佢哋,they / them,Basics
+mat1 je5,乜嘢,what,Basics
+bin1 go3,邊個,who,Basics
+bin1 dou6,邊度,where,Basics
+gei2 si4,幾時,when,Basics
+dim2 gaai2,點解,why,Basics
+dim2 joeng2,點樣,how,Basics
+gei2 do1,幾多,how many / how much,Basics
+gam1 jat6,今日,today,Basics
+ting1 jat6,聽日,tomorrow,Basics
+cam4 jat6,尋日,yesterday,Basics
+heoi3,去,to go,Basics
+lai4,嚟,to come,Basics
+faan1 gung1,返工,to go to work,Basics
+fong3 gung1,放工,to finish work,Basics
+uk1 kei2,屋企,home,Basics
+gung1 si1,公司,company / office,Basics
+tung4 si6,同事,colleague,Basics
+pang4 jau5,朋友,friend,Basics
+ci3 so2,廁所,toilet,Basics
+daai6,大,big,Basics
+sai3,細,small,Basics
+gwai3,貴,expensive,Basics
+peng4,平,cheap,Basics
+jyun5,遠,far,Basics
+gan6,近,near,Basics
+hou2 do1,好多,many / a lot,Basics
+gong2,講,to speak,Basics
+sik1,識,to know (a person / a skill),Basics
+zi1 dou3,知道,to know (a fact),Basics
+m4 zi1,唔知,don't know,Basics
+m4 ming4 baak6,唔明白,don't understand,Basics
+tau4,頭,head,Body Parts
+ngaan5,眼,eye,Body Parts
+ji6 do1,耳朵,ear,Body Parts
+bei6,鼻,nose,Body Parts
+hau4 lung4,喉嚨,throat,Body Parts
+ng5,牙,tooth,Body Parts
+bou6 sau2,部手,hand,Body Parts
+sau2,手,hand,Body Parts
+goek3,腳,foot / leg,Body Parts
+bei6,背,back,Body Parts
+sam1,心,heart,Body Parts
+fei3,肺,lungs,Body Parts
+sik6,食,to eat,Food & Drink
+jam2,飲,to drink,Food & Drink
+seoi2,水,water,Food & Drink
+caa4,茶,tea,Food & Drink
+faan6,飯,rice / meal,Food & Drink
+hou2 sik6,好食,delicious,Food & Drink
+min6,麵,noodles,Food & Drink
+gai1,雞,chicken,Food & Drink
+jyu2,魚,fish,Food & Drink
+gaa3 fe1,咖啡,coffee,Food & Drink
+coi3,菜,vegetable,Food & Drink
+syu4 zai2,薯仔,potato,Food & Drink
+faan1 ke2,番茄,tomato,Food & Drink
+joeng4 cung1,洋蔥,onion,Food & Drink
+syun3 tau4,蒜頭,garlic,Food & Drink
+goeng1,薑,ginger,Food & Drink
+hung4 lo4 baak6,紅蘿蔔,carrot,Food & Drink
+sai1 laan4 faa1,西蘭花,broccoli,Food & Drink
+coi3 sam1,菜心,choy sum,Food & Drink
+saang1 coi3,生菜,lettuce,Food & Drink
+bo1 coi3,菠菜,spinach,Food & Drink
+wong4 gwaa1,黃瓜,cucumber,Food & Drink
+dung1 gwaa1,冬瓜,winter melon,Food & Drink
+mo4 gu1,蘑菇,mushroom,Food & Drink
+suk1 mai5,粟米,corn,Food & Drink
+dau6 fu6,豆腐,tofu,Food & Drink
+seoi2 gwo2,水果,fruit,Food & Drink
+ping4 gwo2,蘋果,apple,Food & Drink
+hoeng1 ziu1,香蕉,banana,Food & Drink
+caang2,橙,orange,Food & Drink
+sai1 gwaa1,西瓜,watermelon,Food & Drink
+pou4 tou4,葡萄,grape,Food & Drink
+mong1 gwo2,芒果,mango,Food & Drink
+bo1 lo4,菠蘿,pineapple,Food & Drink
+lai6 zi1,荔枝,lychee,Food & Drink
+tou4,桃,peach,Food & Drink
+lau4 lin4,榴槤,durian,Food & Drink
+ning4 mung1,檸檬,lemon,Food & Drink
+juk6,肉,meat,Food & Drink
+ngau4 juk6,牛肉,beef,Food & Drink
+zyu1 juk6,豬肉,pork,Food & Drink
+joeng4 juk6,羊肉,lamb,Food & Drink
+aap3,鴨,duck,Food & Drink
+haa1,蝦,prawn / shrimp,Food & Drink
+haai5,蟹,crab,Food & Drink
+caa1 siu1,叉燒,barbecued pork (char siu),Food & Drink
+siu1 aap3,燒鴨,roast duck,Food & Drink
+laap6 coeng2,臘腸,Chinese sausage,Food & Drink
+gai1 daan2,雞蛋,egg,Food & Drink
+ngau4 naai5,牛奶,milk,Food & Drink
+gwo2 zap1,果汁,fruit juice,Food & Drink
+zyu2 faan6,煮飯,to cook a meal,Food & Drink
+ceot1 gaai1 sik6,出街食,to eat out,Food & Drink
+coi3 sik1,菜式,cuisine / type of dish,Food & Drink
+mei6 dou6,味道,taste / flavour,Food & Drink
+fuk6 mou6,服務,service,Food & Drink
+tim4,甜,sweet,Food & Drink
+syun1,酸,sour,Food & Drink
+laat6,辣,spicy,Food & Drink
+haam4,鹹,salty,Food & Drink
+fu2,苦,bitter,Food & Drink
+cing1 daam6,清淡,light / mild flavour,Food & Drink
+nung4 juk1,濃郁,rich / strong flavour,Food & Drink
+zin1,煎,pan-fry,Food & Drink
+caau2,炒,stir-fry,Food & Drink
+zyu2,煮,boil / cook,Food & Drink
+zaa3,炸,deep-fry,Food & Drink
+zing1,蒸,steam,Food & Drink
+guk6,焗,bake / roast,Food & Drink
+mun6,炆,braise / stew,Food & Drink
+bou1,煲,slow-cook,Food & Drink
+jat1,一,one,Numbers
+ji6,二,two,Numbers
+saam1,三,three,Numbers
+sei3,四,four,Numbers
+ng5,五,five,Numbers
+luk6,六,six,Numbers
+cat1,七,seven,Numbers
+baat3,八,eight,Numbers
+gau2,九,nine,Numbers
+sap6,十,ten,Numbers
+sap6 jat1,十一,eleven,Numbers
+sap6 ji6,十二,twelve,Numbers
+sap6 saam1,十三,thirteen,Numbers
+sap6 sei3,十四,fourteen,Numbers
+sap6 ng5,十五,fifteen,Numbers
+sap6 luk6,十六,sixteen,Numbers
+sap6 cat1,十七,seventeen,Numbers
+sap6 baat3,十八,eighteen,Numbers
+sap6 gau2,十九,nineteen,Numbers
+ji6 sap6,二十,twenty,Numbers
+saam1 sap6,三十,thirty,Numbers
+sei3 sap6,四十,forty,Numbers
+ng5 sap6,五十,fifty,Numbers
+luk6 sap6,六十,sixty,Numbers
+cat1 sap6,七十,seventy,Numbers
+baat3 sap6,八十,eighty,Numbers
+gau2 sap6,九十,ninety,Numbers
+jat1 baak3,一百,one hundred,Numbers
+ji6 baak3,二百,two hundred,Numbers
+saam1 baak3,三百,three hundred,Numbers
+ng5 baak3,五百,five hundred,Numbers
+jat1 cin1,一千,one thousand,Numbers
+ji6 cin1,二千,two thousand,Numbers
+ng5 cin1,五千,five thousand,Numbers
+jat1 maan6,一萬,ten thousand,Numbers
+sap6 maan6,十萬,one hundred thousand,Numbers
+jat1 baak3 maan6,一百萬,one million,Numbers
+sap6 jik1,十億,one billion,Numbers
+dei6 tit3,地鐵,underground / MTR,Transport
+ba1 si2,巴士,bus,Transport
+fo2 ce1,火車,train,Transport
+si6 ba1,小巴,minibus,Transport
+dik1 si6,的士,taxi,Transport
+wang5 lo6 ce1,網絡車,ride-hailing car,Transport
+siu2 ce1,小車,car,Transport
+daan1 ce1,單車,bike,Transport
+din6 dung6 ce1,電動車,electric vehicle,Transport
+mo1 to1 ce1,摩托車,motorbike,Transport
+fei1 gei1,飛機,airplane,Transport
+syun4,船,boat / ship,Transport
+dou6 ce1,渡車,ferry,Transport
+ze2,走,walk,Transport
+sing4 lo6,行路,to walk,Transport
+zau2,走,to run,Transport
+ce1 zaam6,車站,station / stop,Transport
+dei6 tit3 zaam6,地鐵站,underground station,Transport
+baa1 si2 zaam6,巴士站,bus stop,Transport
+fo2 ce1 zaam6,火車站,train station,Transport
+fei1 gei1 coeng4,飛機場,airport,Transport
+ce1 pui3,車費,fare,Transport
+ce1 pui3 biu1,車費表,fare meter,Transport
+ce1 pui3 gaau1,車費交,to pay the fare,Transport
+lo6,路,road,Transport
+gung1 lo6,公路,highway,Transport
+ce1 haang4,車行,to drive,Transport
+ce1,車,vehicle / car,Transport
+sak1 ce1,塞車,traffic jam,Transport
+zeon6 ce1,轉車,to change / transfer,Transport
+ce1 pui3,車票,ticket,Transport
+daan1 cing4,單程,one-way,Transport
+loi4 wui5,來回,return journey,Transport
+baat3 daa2 tung1,八達通,Octopus card,Transport
