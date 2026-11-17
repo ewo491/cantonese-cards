@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Cantonese cards</title>
 
+<script src="menu.js"></script>
 <!--CSS STYLE-->
 <style>
   /* Colours live here: change them once and the whole page updates */
@@ -16,14 +17,18 @@
     --burnt_red: #c5646e;
     --sun: #ffd66b;
   }
+
+  #card, #filterBox { color: var(--ink); }
+  
   * { box-sizing: border-box; }
   body {
     margin: 0; min-height: 100vh; padding: 1rem 1rem 2rem;
-    color: var(--ink); text-align: center;
+    color: var(--page-text, var(--ink));
+    text-align: center;
     font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", "Nunito", "Trebuchet MS", sans-serif;
-    background-color: var(--blush);
+    background-color: var(--bg, var(--blush));
     /* polka-dot wallpaper */
-    background-image: radial-gradient(#ffc5cc 18%, transparent 19%);
+    background-image: radial-gradient(var(--dots, #ffc5cc) 18%, transparent 19%);    
     background-size: 28px 28px;
   }
   main { max-width: 440px; margin: 0 auto; }

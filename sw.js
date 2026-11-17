@@ -1,8 +1,8 @@
 // Bump this name (v2, v3...) if you ever need to force everyone to refresh the cache
-const CACHE = 'canto-v1';
+const CACHE = 'canto-v2';
 
 // Files to save for offline use. Add './deck.csv' here if you use a separate deck file
-const FILES = ['./', './index.html'];
+const FILES = ['./', './index.html', './vocab.html', './menu.js'];
 
 // Install: save the files to the phone
 self.addEventListener('install', e => {

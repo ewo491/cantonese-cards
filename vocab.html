@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vocab list</title>
+<script src="menu.js"></script>
+<style>
+  :root { --ink: #3b2a2a; --red: #e8423f; --jade: #5fbf9f; --blush: #ffe3e6; --sun: #ffd66b; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; padding: 1rem 1rem 2rem; text-align: center;
+    color: var(--page-text, var(--ink));
+    font-family: "Arial Rounded MT Bold", "Hiragino Maru Gothic ProN", "Nunito", "Trebuchet MS", sans-serif;
+    background-color: var(--bg, var(--blush));
+    background-image: radial-gradient(var(--dots, #ffc5cc) 18%, transparent 19%);
+    background-size: 28px 28px;
+  }
+  main { max-width: 520px; margin: 0 auto; }
+  .zh { font-family: "PingFang HK", "Noto Sans HK", "Microsoft JhengHei", "Heiti TC", sans-serif; }
+  header .mascots { display: flex; justify-content: center; align-items: flex-end; gap: .6rem; }
+  header svg { width: 76px; height: 76px; }
+  h1 { margin: .2rem 0 1rem; font-size: 1.5rem; }
+  h1 .zh { color: var(--red); font-size: 1.8rem; margin-right: .3rem; }
+
+  /* Search box */
+  #search { width: 100%; font: inherit; font-size: 1.05rem; padding: .6rem 1.1rem; color: var(--ink);
+            background: #fff; border: 3px solid var(--ink); border-radius: 999px; box-shadow: 0 4px 0 var(--ink); }
+  #search:focus-visible, .row:focus-visible, #filterBox summary:focus-visible { outline: 4px solid var(--sun); outline-offset: 3px; }
+
+  /* Collapsible category filter */
+  #filterBox { margin: 1rem auto .6rem; background: #fff; text-align: left; color: var(--ink);
+               border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 4px 0 var(--ink); }
+  #filterBox summary { padding: .55rem 1rem; cursor: pointer; list-style: none; }
+  #filterBox summary::-webkit-details-marker { display: none; }
+  #filterBox summary::after { content: " ▾"; }
+  #filters { max-height: 220px; overflow-y: auto; padding: .2rem 1rem .8rem; }
+  #filters label { display: flex; align-items: center; gap: .6rem; padding: .35rem 0; cursor: pointer; }
+  #filters input { accent-color: var(--red); width: 1.1rem; height: 1.1rem; }
+
+  #status { margin: .8rem 0; font-size: .95rem; }
+
+  /* One vocab row (tap to hear it) */
+  .row {
+    display: grid; grid-template-columns: 1fr auto; grid-template-areas: "jp ch" "en ch";
+    align-items: center; gap: .15rem .8rem; width: 100%; margin: 0 0 .7rem; padding: .7rem 1rem;
+    font: inherit; text-align: left; color: var(--ink); cursor: pointer;
+    background: #fff; border: 3px solid var(--ink); border-radius: 16px; box-shadow: 0 4px 0 var(--ink);
+  }
+  .row:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+  .jp { grid-area: jp; display: flex; flex-wrap: wrap; gap: .1rem .6rem; font-size: 1.2rem; }
+  .en { grid-area: en; font-size: 1rem; opacity: .8; }
+  .ch { grid-area: ch; font-size: 2rem; color: var(--red); }
+  .syl { display: inline-flex; flex-direction: column; align-items: center; }
+  .syl svg { width: 1.3rem; height: 1rem; }
+  #empty a { color: inherit; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <!-- Red paper lantern -->
+    <symbol id="lantern" viewBox="0 0 64 82">
+      <path d="M32 2v9" stroke="#3b2a2a" stroke-width="3" stroke-linecap="round"/>
+      <rect x="19" y="10" width="26" height="8" rx="3" fill="#ffd66b" stroke="#3b2a2a" stroke-width="3"/>
+      <ellipse cx="32" cy="40" rx="27" ry="24" fill="#e8423f" stroke="#3b2a2a" stroke-width="3"/>
+      <path d="M32 17q-15 23 0 46M32 17q15 23 0 46" fill="none" stroke="#b92f2c" stroke-width="2.5"/>
+      <rect x="19" y="62" width="26" height="8" rx="3" fill="#ffd66b" stroke="#3b2a2a" stroke-width="3"/>
+      <path d="M32 71v9M26 71l-2 8M38 71l2 8" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+      <circle cx="23" cy="40" r="3" fill="#3b2a2a"/><circle cx="41" cy="40" r="3" fill="#3b2a2a"/>
+      <path d="M28 46q4 4 8 0" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="16" cy="46" rx="4.5" ry="2.8" fill="#ffb3bd"/><ellipse cx="48" cy="46" rx="4.5" ry="2.8" fill="#ffb3bd"/>
+    </symbol>
+    <!-- Panda -->
+    <symbol id="panda" viewBox="0 0 80 80">
+      <circle cx="17" cy="17" r="11" fill="#3b2a2a"/><circle cx="63" cy="17" r="11" fill="#3b2a2a"/>
+      <ellipse cx="40" cy="45" rx="32" ry="28" fill="#fff" stroke="#3b2a2a" stroke-width="3"/>
+      <ellipse cx="26" cy="42" rx="8" ry="10" fill="#3b2a2a" transform="rotate(20 26 42)"/>
+      <ellipse cx="54" cy="42" rx="8" ry="10" fill="#3b2a2a" transform="rotate(-20 54 42)"/>
+      <circle cx="27" cy="41" r="2.8" fill="#fff"/><circle cx="53" cy="41" r="2.8" fill="#fff"/>
+      <ellipse cx="40" cy="53" rx="5" ry="3.5" fill="#3b2a2a"/>
+      <path d="M34 59q3 4 6 0q3 4 6 0" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="20" cy="58" rx="5" ry="3" fill="#ffa8b4"/><ellipse cx="60" cy="58" rx="5" ry="3" fill="#ffa8b4"/>
+    </symbol>
+    <!-- Chicken foot (dim sum favourite) -->
+    <symbol id="foot" viewBox="0 0 80 80">
+      <g fill="none" stroke="#3b2a2a" stroke-width="16" stroke-linecap="round">
+        <path d="M30 50L12 27"/><path d="M40 46V11"/><path d="M50 50L68 27"/>
+      </g>
+      <ellipse cx="40" cy="55" rx="24" ry="21" fill="#3b2a2a"/>
+      <g fill="none" stroke="#f0a35e" stroke-width="10" stroke-linecap="round">
+        <path d="M30 50L12 27"/><path d="M40 46V11"/><path d="M50 50L68 27"/>
+      </g>
+      <ellipse cx="40" cy="55" rx="21" ry="18" fill="#f0a35e"/>
+      <circle cx="32" cy="53" r="2.8" fill="#3b2a2a"/><circle cx="48" cy="53" r="2.8" fill="#3b2a2a"/>
+      <path d="M36 59q4 4 8 0" fill="none" stroke="#3b2a2a" stroke-width="2.5" stroke-linecap="round"/>
+      <ellipse cx="26" cy="60" rx="4" ry="2.5" fill="#ffa8b4"/><ellipse cx="54" cy="60" rx="4" ry="2.5" fill="#ffa8b4"/>
+    </symbol>
+  </defs>
+</svg>
+
+<main>
+  <header>
+    <div class="mascots">
+      <svg role="img" aria-label="Lantern"><use href="#lantern"/></svg>
+      <svg role="img" aria-label="Panda" style="width:92px;height:92px"><use href="#panda"/></svg>
+      <svg role="img" aria-label="Chicken foot"><use href="#foot"/></svg>
+    </div>
+    <h1><span class="zh">詞彙</span>Vocab list</h1>
+  </header>
+
+  <input id="search" type="search" placeholder="Search jyutping, characters or English" aria-label="Search words">
+
+  <details id="filterBox">
+    <summary id="filterLabel">Categories: All</summary>
+    <div id="filters"></div>
+  </details>
+
+  <p id="status"></p>
+  <div id="list"></div>
+  <p id="empty" hidden>No deck yet. Open <a href="index.html">Flashcards</a> and choose your CSV first.</p>
+</main>
+
+<script>
+  const $ = id => document.getElementById(id);
+
+  // Tone colours and pitch shapes (pitch from 1 = low to 5 = high)
+  const TONES = {
+    1: { color: '#e8423f', from: 5, to: 5 },
+    2: { color: '#d9730d', from: 2, to: 5 },
+    3: { color: '#2f9e6f', from: 3, to: 3 },
+    4: { color: '#2f6fd0', from: 2, to: 1 },
+    5: { color: '#8250c8', from: 2, to: 3 },
+    6: { color: '#c2418a', from: 2, to: 2 },
+  };
+
+  // The deck is saved by the flashcard page when you load your CSV
+  let original = [];
+  try { original = JSON.parse(localStorage.getItem('cards') || '[]'); } catch (e) {}
+  const selected = new Set();
+  const catOf = r => r[3] || 'Uncategorised';
+
+  // Jyutping with each syllable coloured and given a tone line
+  function jyutping(text) {
+    const box = document.createElement('span');
+    box.className = 'jp';
+    text.split(/\s+/).forEach(word => {
+      const m = word.match(/^(.*?)([1-6])$/);
+      const syl = document.createElement('span');
+      syl.className = 'syl';
+      if (m) {
+        const t = TONES[m[2]];
+        const y = n => (20 - 3.6 * n).toFixed(1);
+        syl.style.color = t.color;
+        syl.innerHTML = '<svg viewBox="0 0 24 20" aria-hidden="true"><line x1="3" y1="' + y(t.from) +
+          '" x2="21" y2="' + y(t.to) + '" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+      }
+      const label = document.createElement('span');
+      label.textContent = word;
+      syl.append(label);
+      box.append(syl);
+    });
+    return box;
+  }
+
+  // Read characters aloud with the device's Cantonese voice
+  function speak(text) {
+    if (!text) return;
+    const u = new SpeechSynthesisUtterance(text);
+    const v = speechSynthesis.getVoices().find(v => /^(zh[-_]HK|yue)/i.test(v.lang));
+    if (v) u.voice = v;
+    u.lang = v ? v.lang : 'zh-HK';
+    u.rate = 0.8;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  }
+
+  // Text used for searching: jyutping with and without tone numbers, characters, English
+  const haystack = r => (r[0] + ' ' + r[0].replace(/[1-6]/g, '') + ' ' + (r[1] || '') + ' ' + (r[2] || '')).toLowerCase();
+
+  // Draw the list for the current search and categories
+  function render() {
+    const q = $('search').value.trim().toLowerCase();
+    const rows = original.filter(r =>
+      (!selected.size || selected.has(catOf(r))) && (!q || haystack(r).includes(q)));
+
+    $('list').textContent = '';
+    rows.forEach(r => {
+      const b = document.createElement('button');
+      b.className = 'row';
+      b.title = 'Tap to hear';
+      const en = document.createElement('span');
+      en.className = 'en';
+      en.textContent = r[2] || '';
+      const ch = document.createElement('span');
+      ch.className = 'zh ch';
+      ch.textContent = r[1] || '';
+      b.append(jyutping(r[0]), en, ch);
+      b.onclick = () => speak(r[1]);
+      $('list').append(b);
+    });
+    $('status').textContent = rows.length + ' of ' + original.length + ' words';
+  }
+
+  // "All" checkbox plus one per category
+  function renderFilter() {
+    const cats = [...new Set(original.map(catOf))];
+    const y = $('filters').scrollTop;
+    $('filters').innerHTML = '';
+    const add = (label, checked, onchange) => {
+      const l = document.createElement('label');
+      const cb = document.createElement('input');
+      cb.type = 'checkbox';
+      cb.checked = checked;
+      cb.onchange = onchange;
+      l.append(cb, label);
+      $('filters').append(l);
+    };
+    add('All', selected.size === 0, () => { selected.clear(); renderFilter(); render(); });
+    cats.forEach(c => add(c, selected.has(c), () => {
+      selected.has(c) ? selected.delete(c) : selected.add(c);
+      renderFilter();
+      render();
+    }));
+    $('filters').scrollTop = y;
+    $('filterLabel').textContent = 'Categories: ' + (selected.size ? selected.size + ' selected' : 'All');
+  }
+
+  $('search').oninput = render;
+
+  if (original.length) { renderFilter(); render(); }
+  else { $('empty').hidden = false; $('status').hidden = true; $('search').disabled = true; }
+</script>
+</body>
+</html>
