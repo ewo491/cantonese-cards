@@ -51,7 +51,11 @@ Notes:
 
 - After an update, the new version appears on your **second** visit, because the old copy is shown while the new one downloads.
 - On iPhone, Safari can clear a site's saved data if it isn't visited for about a week. Use **Share → Add to Home Screen** and open it from there, and keep your CSV handy.
-- Speech needs a Cantonese voice installed on your device. On iPhone, download it under Settings → Accessibility → Spoken Content → Voices → Cantonese. The voice is text-to-speech, so it can occasionally pick the wrong reading for a character.
+
+## Activating Cantonese Text-to-Speech
+- Speech needs a Cantonese voice installed on your device.
+- _iPhone_: download it under Settings → Accessibility → Spoken Content → Voices → Cantonese. The voice is text-to-speech, so it can occasionally pick the wrong reading for a character.
+- _Android_: speech uses your phone’s text-to-speech engine, usually Google’s. Open Settings → System → Languages & input → Text-to-speech output (the path varies by phone brand, so searching Settings for “text-to-speech” is quickest). Check that Google Speech Services is the preferred engine, then open its settings and choose Install voice data. Download Cantonese (Hong Kong), which may be listed as “Chinese (Hong Kong)”. Once the voice is downloaded, it works offline. If you hear nothing or a Mandarin voice, the Cantonese voice probably isn’t installed yet.
 
 ## Files
 
